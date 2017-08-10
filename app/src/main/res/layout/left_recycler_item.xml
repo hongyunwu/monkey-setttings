@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/left_recycler_item"
+    android:clipChildren="false"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/settings_left_item_bg"
+        android:id="@+id/left_recycler_item_bg"
+        android:scaleType="matrix"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal"
+       >
+        <RelativeLayout
+            android:layout_width="@dimen/settings_left_text_margin_left"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/settings_car_selector"
+                android:layout_centerInParent="true"
+                android:id="@+id/left_recycler_item_pic"
+                android:layout_marginLeft="@dimen/title_bar_margin_left"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="@dimen/width_0"
+            android:layout_weight="@integer/weight_1"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/left_recycler_item_txt"
+            android:textColor="@color/color_white"
+            android:text="@string/settings_car"
+            android:textSize="@dimen/settings_left_text_size"/>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/settings_item_selector"
+    android:id="@+id/item_app_update"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/recycler_item_height"
+        android:gravity="center_vertical"
+        android:id="@+id/display_brightness_header"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="@dimen/width_0"
+            android:layout_weight="@integer/weight_1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/recycler_item_margin_left"
+            android:textSize="@dimen/recycler_item_text_size"
+            android:textColor="@color/color_white"
+            android:text="@string/app_update"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:src="@drawable/settings_right_item_arrow"
+            android:scaleType="center"
+            android:background="@null"
+            android:paddingLeft="@dimen/brightness_progress_padding"
+            android:paddingRight="@dimen/brightness_progress_padding"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/recycler_item_margin_right_60"/>
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/recycler_divider_line"
+            android:alpha="@dimen/alpha_0_0_9"/>
+        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/display_brightness_content"
+            app:ael_expanded="false"
+            app:ael_duration="500"
+            android:visibility="gone"
+            android:background="@drawable/brightness_bg"
+            app:ael_interpolator="bounce"
+            app:ael_orientation="horizontal"
+            android:layout_height="@dimen/recycler_item_height">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:id="@+id/settings_right_light"
+                android:layout_marginLeft="@dimen/recycler_item_margin_left"
+                android:background="@drawable/settings_right_light"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/content_text_pic_margin"
+                android:textColor="@color/title_txt_color"
+                android:layout_toRightOf="@id/settings_right_light"
+                android:textSize="@dimen/recycler_item_text_size"
+                android:id="@+id/brightness_text"
+                android:layout_centerVertical="true"
+                android:text="@string/brightness"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/brightness_text">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/brightness_subtract"
+                        android:background="@drawable/brightness_subtract"
+                        />
+                    <ImageView
+                        android:layout_marginLeft="@dimen/brightness_progress_margin"
+                        android:layout_marginRight="@dimen/brightness_progress_margin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/brightness_progress_bg"
+                        />
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/brightness_add"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+
+
+
+        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

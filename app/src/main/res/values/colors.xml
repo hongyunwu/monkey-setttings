@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#ffc000</color>
+    <color name="title_txt_color">#666e75</color>
+    <color name="color_white">#fff</color>
+    <color name="switch_yellow_color" >#ffc000</color>
+    <color name="switch_gray_color" >#1e2226</color>
+    <color name="settings_pressed_color">#3a3d41</color>
+</resources>

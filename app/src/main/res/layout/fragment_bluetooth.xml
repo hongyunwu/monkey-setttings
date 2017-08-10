@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/item_bluetooth_auto_rev"/>
+    <include layout="@layout/item_bluetooth_search"/>
+    <include layout="@layout/item_bluetooth_modify"/>
+    <include layout="@layout/item_bluetooth_be_visible"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--蓝牙列表-->
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:id="@+id/bluetooth_list">
+
+        </android.support.v7.widget.RecyclerView>
+        <!--loading-->
+
+    </FrameLayout>
+
+</LinearLayout>

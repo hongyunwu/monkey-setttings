@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/settings_bg"
+        android:scaleType="matrix"/>
+    <!--头布局-->
+    <include layout="@layout/settings_header"
+        android:id="@+id/settings_header"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/settings_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/setting_right_margin"
+        android:paddingBottom="@dimen/setting_right_margin"
+        android:clipChildren="false"
+        android:layout_below="@id/settings_header">
+        <!--点击区-->
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="@dimen/width_0"
+            android:layout_weight="@dimen/weight_0_4"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:overScrollMode="never"
+            android:id="@+id/left_title"/>
+        <!--内容区-->
+        <FrameLayout
+            android:layout_width="@dimen/width_0"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/weight_0_8_5"
+            android:id="@+id/right_content"
+
+            android:layout_marginRight="@dimen/setting_right_margin">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/settings_right_bg"
+                android:alpha="@dimen/alpha_0_3"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

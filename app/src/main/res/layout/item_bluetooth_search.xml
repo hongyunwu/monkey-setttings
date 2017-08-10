@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/item_bluetooth_search"
+    android:background="@drawable/settings_item_selector"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/recycler_item_height"
+        android:gravity="center_vertical"
+        android:id="@+id/bluetooth_search_header"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="@dimen/width_0"
+            android:layout_weight="@integer/weight_1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/recycler_item_margin_left"
+            android:textSize="@dimen/recycler_item_text_size"
+            android:textColor="@color/color_white"
+            android:text="@string/bluetooth_search"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:src="@drawable/bluetooth_search"
+            android:scaleType="center"
+            android:background="@null"
+            android:id="@+id/bluetooth_search"
+            android:paddingLeft="@dimen/brightness_progress_padding"
+            android:paddingRight="@dimen/brightness_progress_padding"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/recycler_item_margin_right_60"/>
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/recycler_divider_line"
+            android:alpha="@dimen/alpha_0_0_9"/>
+    </FrameLayout>
+
+</LinearLayout>
