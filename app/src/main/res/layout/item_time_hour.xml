@@ -50,65 +50,67 @@
             android:background="@drawable/brightness_bg"
             app:ael_orientation="vertical"
             android:layout_height="@dimen/width_0">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:id="@+id/settings_right_light"
-                android:layout_marginLeft="@dimen/recycler_item_margin_left"
-                android:background="@drawable/settings_right_light"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/content_text_pic_margin"
-                android:textColor="@color/title_txt_color"
-                android:layout_toRightOf="@id/settings_right_light"
-                android:textSize="@dimen/recycler_item_text_size"
-                android:id="@+id/brightness_text"
-                android:layout_centerVertical="true"
-                android:text="@string/brightness"/>
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/recycler_item_height"
-                android:layout_toRightOf="@id/brightness_text">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/recycler_item_margin_left">
+                <RelativeLayout
+                    android:layout_width="@dimen/date_input_width"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:paddingLeft="@dimen/brightness_progress_padding"
-                        android:paddingRight="@dimen/brightness_progress_padding"
-                        android:id="@+id/brightness_subtract"
+                        android:textSize="@dimen/recycler_item_text_size"
+                        android:textColor="@color/color_white"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:id="@+id/time_hour"
                         android:background="@null"
-                        android:src="@drawable/brightness_subtract"
-                        android:scaleType="center"
                         />
                     <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/date_input_line_height"
+                        android:background="@color/switch_yellow_color"
+                        android:layout_alignParentBottom="true"/>
+                </RelativeLayout>
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/brightness_progress"
-                        android:background="@drawable/brightness_progress_bg"
-                        android:src="@drawable/brightness_clip_level"
-                        />
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/brightness_add"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/recycler_item_text_size"
+                    android:textColor="@color/color_white"
+                    android:gravity="center"
+                    android:text="@string/hour"/>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/date_input_width"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/recycler_item_text_size"
+                        android:textColor="@color/color_white"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:id="@+id/time_minute"
                         android:background="@null"
-                        android:paddingLeft="@dimen/brightness_progress_padding"
-                        android:paddingRight="@dimen/brightness_progress_padding"
-                        android:scaleType="center"
-                        android:src="@drawable/brightness_add"/>
-                </LinearLayout>
-            </RelativeLayout>
+                        />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/date_input_line_height"
+                        android:background="@color/switch_yellow_color"
+                        android:layout_alignParentBottom="true"/>
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/recycler_item_text_size"
+                    android:textColor="@color/color_white"
+                    android:gravity="center"
+                    android:text="@string/minute"/>
+
+            </LinearLayout>
         </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
     </FrameLayout>
 

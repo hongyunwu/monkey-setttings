@@ -44,4 +44,12 @@
     <string name="time_year">设置日期</string>
     <string name="time_zone">选择时区</string>
     <string name="time_zone_desc">中国,北京时区</string>
+    <string name="input_pwd">输入密码</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确认</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
 </resources>

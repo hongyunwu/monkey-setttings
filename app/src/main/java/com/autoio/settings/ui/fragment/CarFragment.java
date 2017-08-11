@@ -9,8 +9,9 @@ import com.autoio.core_sdk.manager.BrightnessLevel;
 import com.autoio.core_sdk.manager.BrightnessManager;
 import com.autoio.settings.R;
 import com.autoio.settings.holder.CarViewHolder;
-import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.orhanobut.logger.Logger;
+
+import static com.autoio.settings.utils.AnimUtils.toggleContent;
 
 /**
  * Created by wuhongyun on 17-8-8.
@@ -89,67 +90,30 @@ public class CarFragment extends BaseFragment<CarViewHolder> implements View.OnC
      * 对驻车辅助系统急性初始化
      */
     private void initSupportingSystem() {
-        viewHolder.supportingSystemHolder.setListeners(this,R.id.supporting_system_arrow,R.id.item_supporting_system);
+        viewHolder.supportingSystemHolder.setListeners(this,R.id.supporting_system_arrow,R.id.supporting_system_header);
         viewHolder.supportingSystemHolder.auto_open_camera_switch.setOnCheckedChangeListener(this);
-        viewHolder.supportingSystemHolder.auto_open_camera_switch.setOnCheckedChangeListener(this);
+        //viewHolder.supportingSystemHolder.auto_open_camera_switch.setOnCheckedChangeListener(this);
     }
 
     /**
      * 对显示屏进行初始化
      */
     private void initBrightness() {
-        viewHolder.brightnessHolder.setListeners(this,R.id.brightness_arrow,R.id.brightness_add,R.id.brightness_subtract,R.id.item_driver_display);
+        viewHolder.brightnessHolder.setListeners(this,R.id.brightness_arrow,R.id.brightness_add,R.id.brightness_subtract,R.id.display_brightness_header);
         BrightnessManager.getInstance(getContext()).setCurrentBright(getContext(), BrightnessLevel.LEVEL_FULL);
         ((ClipDrawable)viewHolder.brightnessHolder.brightness_progress.getDrawable())
                 .setLevel(BrightnessManager.getInstance(getContext()).getCurrentBright(getContext()));
 
     }
 
-    /**
-     * 折叠展开布局
-     * @param expandableLayout 需要折叠展开的布局view
-     * @param arrow 附带需要旋转的arrow
-     */
-    private void toggleContent( ExpandableLayout expandableLayout,View arrow) {
-        if (expandableLayout.isExpanded()){
 
-            expandableLayout.collapse();
-            //500ms
-            arrowRight(arrow);
-            Logger.i("arrowRight");
-
-        }else{
-
-            expandableLayout.expand();
-            arrowDown(arrow);
-            Logger.i("arrowDown");
-        }
-
-    }
-
-    /**
-     * 动画效果，箭头由向下到向右
-     * @param view 需要做动画的view
-     */
-    private void arrowRight(View view) {
-        view.animate().rotation(0).setDuration(500).start();
-    }
-
-    /**
-     * 箭头向下
-     * @param view 需要做动画的view
-     */
-    private void arrowDown(View view) {
-
-        view.animate().rotation(90).setDuration(500).start();
-    }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.brightness_arrow:
-            case R.id.item_driver_display:
+            case R.id.display_brightness_header:
                 toggleContent(viewHolder.brightnessHolder.display_brightness_content,viewHolder.brightnessHolder.brightness_arrow);
                 break;
             case R.id.brightness_subtract:
@@ -163,7 +127,7 @@ public class CarFragment extends BaseFragment<CarViewHolder> implements View.OnC
                         .setLevel(BrightnessManager.getInstance(getContext()).getCurrentBright(getContext()));
                 break;
             case R.id.supporting_system_arrow:
-            case R.id.item_supporting_system:
+            case R.id.supporting_system_header:
                 toggleContent(viewHolder.supportingSystemHolder.supporting_system_content,viewHolder.supportingSystemHolder.supporting_system_arrow);
                 break;
 

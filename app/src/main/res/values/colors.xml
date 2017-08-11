@@ -8,4 +8,6 @@
     <color name="switch_yellow_color" >#ffc000</color>
     <color name="switch_gray_color" >#1e2226</color>
     <color name="settings_pressed_color">#3a3d41</color>
+    <color name="half_gray_color">#4C000000</color>
+    <color name="dialog_color">#262b2f</color>
 </resources>

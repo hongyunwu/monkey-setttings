@@ -22,8 +22,20 @@
     <dimen name="brightness_progress_padding">20dp</dimen>
     <dimen name="recycler_item_margin_right_60">60dp</dimen>
     <dimen name="settings_item_radius">12dp</dimen>
+    <dimen name="wifi_list_height">234dp</dimen>
+    <dimen name="dialog_radius">5dp</dimen>
     <item name="alpha_0_3" type="dimen" format="float">0.3</item>
     <item name="alpha_0_0_9" type="dimen" format="float">0.09</item>
     <item name="weight_0_4" type="dimen" format="float">0.4</item>
     <item name="weight_0_8_5" type="dimen" format="float">0.85</item>
+
+
+    <dimen name="dialog_width">553px</dimen>
+    <dimen name="dialog_height">291px</dimen>
+    <dimen name="dialog_input_marign">63px</dimen>
+    <dimen name="line_height">1dp</dimen>
+    <dimen name="dialog_line_margin">5dp</dimen>
+    <dimen name="input_pwd_height">76px</dimen>
+    <dimen name="date_input_width">138dp</dimen>
+    <dimen name="date_input_line_height">4dp</dimen>
 </resources>
