@@ -43,7 +43,7 @@ public class BrightnessManager {
         //closeAutoMatic(context);
         if (isAutoBrightness(context)){
             closeAutoMatic(context);
-            //setBrightnessMode(context,Settings.System.sc);
+            setBrightnessMode(context,0);
         }
         //获取当前的屏幕亮度
         int currentBright = (Settings.System.getInt(context.getContentResolver(),

@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.autoio.core_sdk.base.BaseFragment;
-import com.autoio.core_sdk.manager.BrightnessLevel;
 import com.autoio.core_sdk.manager.BrightnessManager;
 import com.autoio.settings.R;
 import com.autoio.settings.holder.CarViewHolder;
@@ -100,7 +99,7 @@ public class CarFragment extends BaseFragment<CarViewHolder> implements View.OnC
      */
     private void initBrightness() {
         viewHolder.brightnessHolder.setListeners(this,R.id.brightness_arrow,R.id.brightness_add,R.id.brightness_subtract,R.id.display_brightness_header);
-        BrightnessManager.getInstance(getContext()).setCurrentBright(getContext(), BrightnessLevel.LEVEL_FULL);
+        //BrightnessManager.getInstance(getContext()).setCurrentBright(getContext(), BrightnessLevel.LEVEL_FULL);
         ((ClipDrawable)viewHolder.brightnessHolder.brightness_progress.getDrawable())
                 .setLevel(BrightnessManager.getInstance(getContext()).getCurrentBright(getContext()));
 
