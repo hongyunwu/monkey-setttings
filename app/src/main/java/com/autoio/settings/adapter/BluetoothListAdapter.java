@@ -38,11 +38,7 @@ public class BluetoothListAdapter extends RecyclerView.Adapter<BluetoothItemHold
     public void onBindViewHolder(BluetoothItemHolder holder, int position) {
         BluetoothDevice bluetoothDevice = mDevices.get(position);
         String name = null;
-        if (TextUtils.isEmpty(bluetoothDevice.getName())){
-            name = bluetoothDevice.getAddress();
-        }else{
-            name = bluetoothDevice.getName();
-        }
+        name = getBlueToothName(bluetoothDevice);
         Set<BluetoothDevice> boundDevices = LocalBluetoothAdapter.getInstance().getBoundDevices();
         if (boundDevices!=null&&boundDevices.contains(bluetoothDevice)){
             holder.bluetooth_connected.setText(R.string.has_paired);
@@ -59,6 +55,16 @@ public class BluetoothListAdapter extends RecyclerView.Adapter<BluetoothItemHold
 
         holder.bluetooth_name.setText(name);
 
+    }
+
+    public static String getBlueToothName(BluetoothDevice bluetoothDevice) {
+        String name;
+        if (TextUtils.isEmpty(bluetoothDevice.getName())){
+            name = bluetoothDevice.getAddress();
+        }else{
+            name = bluetoothDevice.getName();
+        }
+        return name;
     }
 
     @Override

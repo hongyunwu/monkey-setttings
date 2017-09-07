@@ -4,14 +4,26 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.LinkProperties;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
+import com.orhanobut.logger.Logger;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
+
+import static com.autoio.core_sdk.wifi.WiFiSecurityType.SECURITY_EAP;
+import static com.autoio.core_sdk.wifi.WiFiSecurityType.SECURITY_NONE;
+import static com.autoio.core_sdk.wifi.WiFiSecurityType.SECURITY_PSK;
+import static com.autoio.core_sdk.wifi.WiFiSecurityType.SECURITY_WEP;
 
 /**
  * Created by wuhongyun on 17-8-11.
@@ -82,9 +94,21 @@ public class WiFiController {
         return mWifiManager.getWifiState();
     }
 
-    public int getWifiType() {
-        return 0;
+    public int getWifiType(ScanResult scanResult) {
+        int wifiType = getSecurity(scanResult);
+        Logger.i("getWifiType:"+wifiType);
+        return wifiType;
     }
+
+    public boolean reconnect() {
+        if (!mWifiManager.isWifiEnabled()){
+            return false;
+        }
+
+        return mWifiManager.reconnect();
+    }
+
+
 
     public class Scanner extends Handler {
         private int mRetry = 0;
@@ -123,10 +147,10 @@ public class WiFiController {
      * 创建wifiInfo
      * @param SSID  网络名称
      * @param password 密码
-     * @param Type
+     * @param type
      * @return
      */
-    public WifiConfiguration CreateWifiInfo(String SSID, String password, int Type){
+    public WifiConfiguration CreateWifiInfo(String SSID, String password, int type){
         WifiConfiguration config = new WifiConfiguration();
         config.allowedAuthAlgorithms.clear();
         config.allowedGroupCiphers.clear();
@@ -140,13 +164,13 @@ public class WiFiController {
             mWifiManager.removeNetwork(tempConfig.networkId);
         }
 
-        if(Type == 1) //WIFICIPHER_NOPASS
+        if(type == WiFiSecurityType.SECURITY_NONE) //WIFICIPHER_NOPASS
         {
             config.wepKeys[0] = "";
             config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             config.wepTxKeyIndex = 0;
         }
-        if(Type == 2) //WIFICIPHER_WEP
+        if(type == WiFiSecurityType.SECURITY_WEP) //WIFICIPHER_WEP
         {
             config.hiddenSSID = true;
             config.wepKeys[0]= "\""+password+"\"";
@@ -158,7 +182,7 @@ public class WiFiController {
             config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             config.wepTxKeyIndex = 0;
         }
-        if(Type == 3) //WIFICIPHER_WPA
+        if(type == WiFiSecurityType.SECURITY_PSK) //WIFICIPHER_WPA
         {
             config.preSharedKey = "\""+password+"\"";
             config.hiddenSSID = true;
@@ -191,8 +215,16 @@ public class WiFiController {
      * 连接wifi
      * @param wifiConfiguration
      */
-    public void enableNetWork(WifiConfiguration wifiConfiguration){
-        mWifiManager.enableNetwork(wifiConfiguration.networkId,true);
+    public boolean enableNetWork(WifiConfiguration wifiConfiguration){
+        return mWifiManager.enableNetwork(wifiConfiguration.networkId,true);
+    }
+
+    /**
+     * 连接wifi
+     * @param networkId
+     */
+    public boolean enableNetWork(int networkId){
+        return mWifiManager.enableNetwork(networkId,true);
     }
 
     /**
@@ -207,5 +239,70 @@ public class WiFiController {
             mWifiManager.disconnect();
         }
     }
+
+    /**
+     *
+     * @param wifiConfiguration  wifi配置
+     */
+    public void connectNetWork(WifiConfiguration wifiConfiguration){
+
+        try {
+
+
+            Method connectNetWork = WifiManager.class.getMethod("connect",WifiConfiguration.class,Class.forName("android.net.wifi.WifiManager$ActionListener"));
+            connectNetWork.invoke(mWifiManager,wifiConfiguration,null);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static PskType getPskType(ScanResult result) {
+        boolean wpa = result.capabilities.contains("WPA-PSK");
+        boolean wpa2 = result.capabilities.contains("WPA2-PSK");
+        if (wpa2 && wpa) {
+            return PskType.WPA_WPA2;
+        } else if (wpa2) {
+            return PskType.WPA2;
+        } else if (wpa) {
+            return PskType.WPA;
+        } else {
+            return PskType.UNKNOWN;
+        }
+    }
+
+    public int addNetWork(WifiConfiguration wifiConfiguration) {
+
+        return mWifiManager.addNetwork(wifiConfiguration);
+
+    }
+
+
+    /**
+     * 获取网络的类型
+     * @param result
+     * @return
+     */
+    static int getSecurity(ScanResult result) {
+        if (result.capabilities.contains("WEP")) {
+            return SECURITY_WEP;
+        } else if (result.capabilities.contains("PSK")) {
+            return SECURITY_PSK;
+        } else if (result.capabilities.contains("EAP")) {
+            return SECURITY_EAP;
+        }
+
+
+        return SECURITY_NONE;
+    }
+
+
+
+
+
 
 }

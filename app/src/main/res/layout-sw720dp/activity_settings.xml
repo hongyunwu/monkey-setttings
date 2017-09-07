@@ -32,19 +32,19 @@
             android:overScrollMode="never"
             android:id="@+id/left_title"/>
         <!--内容区-->
-
+        <FrameLayout
+            android:layout_width="@dimen/width_0"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/weight_0_8_5"
+            android:id="@+id/right_content"
+            android:layout_marginRight="@dimen/setting_right_margin">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/settings_right_bg"
+                android:alpha="@dimen/alpha_0_3"/>
+        </FrameLayout>
 
     </LinearLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/right_content"
-        android:layout_below="@id/settings_header"
-        android:layout_margin="@dimen/setting_right_margin">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/settings_right_bg"
-            android:alpha="@dimen/alpha_0_3"/>
-    </FrameLayout>
+
 </RelativeLayout>

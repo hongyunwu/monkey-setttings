@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.autoio.core_sdk.base.BaseHolder;
 import com.autoio.settings.R;
@@ -18,6 +19,8 @@ public class BlueToothViewHolder extends BaseHolder {
 
     @BindView(R.id.bluetooth_list)
     public RecyclerView bluetooth_list;
+    @BindView(R.id.bluetooth_scanning)
+    public TextView bluetooth_scanning;
     /**
      * 此处使用butterKnife进行了view绑定操作
      *

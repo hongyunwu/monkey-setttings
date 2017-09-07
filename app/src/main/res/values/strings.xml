@@ -52,4 +52,5 @@
     <string name="year">年</string>
     <string name="month">月</string>
     <string name="day">日</string>
+    <string name="bluetooth_scanning">正在扫描蓝牙设备</string>
 </resources>

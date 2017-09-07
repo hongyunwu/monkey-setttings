@@ -120,6 +120,7 @@ public class BlueToothFragment extends BaseFragment<BlueToothViewHolder> impleme
             String action = intent.getAction();
             if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)){
                 //获取设备信息
+                finishScan();
 
             }else if (BluetoothDevice.ACTION_FOUND.equals(action)){
 
@@ -167,6 +168,7 @@ public class BlueToothFragment extends BaseFragment<BlueToothViewHolder> impleme
                     mDevices.add(bluetoothDevice);
                     bluetoothListAdapter.notifyDataSetChanged();
                 }
+                Logger.i("BluetoothDevice->name:"+BluetoothListAdapter.getBlueToothName(bluetoothDevice));
 
             }
 
@@ -174,24 +176,43 @@ public class BlueToothFragment extends BaseFragment<BlueToothViewHolder> impleme
 
         }
     }
+
+    /**
+     * 结束扫描
+     */
+    private void finishScan() {
+
+        viewHolder.bluetooth_scanning.setVisibility(View.GONE);
+        viewHolder.bluetooth_list.setVisibility(View.VISIBLE);
+
+    }
+
+    /**
+     * 开始扫描
+     */
+    private void startScan() {
+        //if (LocalBluetoothAdapter.getInstance().getBluetoothState()== BluetoothAdapter.STATE_ON){
+        LocalBluetoothAdapter.getInstance().startScanning(true);
+        viewHolder.bluetooth_scanning.setVisibility(View.VISIBLE);
+        viewHolder.bluetooth_list.setVisibility(View.INVISIBLE);
+        clearBluetoothList();
+        Logger.i("LocalBluetoothAdapter->name:"+LocalBluetoothAdapter.getInstance().getName());
+        //LocalBluetoothAdapter.getInstance().setName("wuhongyun");
+
+        //}else{
+        //   Logger.i("蓝牙没有打开...");
+        //}
+
+    }
+
+
     ArrayList<BluetoothDevice> mDevices = new ArrayList<>();
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bluetooth_search:
             case R.id.item_bluetooth_search:
-                //if (LocalBluetoothAdapter.getInstance().getBluetoothState()== BluetoothAdapter.STATE_ON){
-                    LocalBluetoothAdapter.getInstance().startScanning(true);
-
-                clearBluetoothList();
-                    Logger.i("LocalBluetoothAdapter->name:"+LocalBluetoothAdapter.getInstance().getName());
-                    //LocalBluetoothAdapter.getInstance().setName("wuhongyun");
-
-
-                //}else{
-                 //   Logger.i("蓝牙没有打开...");
-                //}
-
+                startScan();
                 break;
 
         }

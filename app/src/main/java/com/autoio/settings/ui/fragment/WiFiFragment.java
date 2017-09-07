@@ -14,6 +14,7 @@ import android.widget.CompoundButton;
 
 import com.autoio.core_sdk.base.BaseFragment;
 import com.autoio.core_sdk.wifi.WiFiController;
+import com.autoio.core_sdk.wifi.WiFiSecurityType;
 import com.autoio.core_sdk.wifi.WifiApEnabler;
 import com.autoio.core_sdk.wifi.WifiEnabler;
 import com.autoio.core_sdk.wifi.WifiHandleEvent;
@@ -57,7 +58,9 @@ public class WiFiFragment extends BaseFragment<WiFiViewHolder> implements Compou
         wiFiController = new WiFiController(getContext(), this);
         initWifiList();
 
+
     }
+
 
     private void initWifiList() {
         viewHolder.wiFiDevicesHolder.setListeners(this,R.id.wifi_devices_header,R.id.wifi_devices_arrow);
@@ -107,7 +110,6 @@ public class WiFiFragment extends BaseFragment<WiFiViewHolder> implements Compou
 
     @Override
     public void handleEvent(Context context, Intent intent) {
-        Logger.i("action->"+intent.getAction());
         if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(intent.getAction())) {
             updateWifiState(intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
                     WifiManager.WIFI_STATE_UNKNOWN));
@@ -123,19 +125,16 @@ public class WiFiFragment extends BaseFragment<WiFiViewHolder> implements Compou
 
         }else if ("android.net.wifi.SCAN_RESULTS".equals(intent.getAction())){
             List<ScanResult> scanResult = wiFiController.getScanResult();
-            Logger.i("scanResult:"+scanResult);
             //刷新页面
             refreshScanResult(scanResult);
         }
 
     }
     private void updateWifiState(int state) {
-        Logger.i("state->"+state);
         switch (state) {
             case WifiManager.WIFI_STATE_ENABLED:
                 wiFiController.getScanner().resume();//扫描wfi
                 List<ScanResult> scanResult = wiFiController.getScanResult();
-                Logger.i("scanResult:"+scanResult);
                 //刷新页面
                 refreshScanResult(scanResult);
 
@@ -205,15 +204,43 @@ public class WiFiFragment extends BaseFragment<WiFiViewHolder> implements Compou
                     @Override
                     public void onConfirmClick(DialogInterface dialogInterface, String inputPwd, ScanResult scanResult) {
                         dialogInterface.dismiss();
-                        Logger.i("scanResult->"+scanResult+", inputPwd->"+inputPwd);
-                        WifiConfiguration wifiConfiguration = wiFiController.CreateWifiInfo(scanResult.SSID, inputPwd, wiFiController.getWifiType());
-
-                        wiFiController.enableNetWork(wifiConfiguration);
-                        //此处需要进行连接wifi的操作
+                        connect(inputPwd,scanResult);
                     }}
                 ).create().show();
 
 
+    }
+
+    /**
+     * 进行网络连接，1：需要先判断是否需要输入密码
+     * @param inputPwd
+     * @param scanResult
+     */
+    private void connect(String inputPwd, ScanResult scanResult) {
+
+        WifiConfiguration wifiConfiguration = wiFiController.CreateWifiInfo(scanResult.SSID, inputPwd, wiFiController.getWifiType(scanResult));
+        //1：需要先判断是否需要输入密码
+        int wifiId = wiFiController.addNetWork(wifiConfiguration);
+        boolean enableNetWork = false;
+        if (wifiId!=-1){
+            //获取config
+            //wiFiController.connectNetWork(wifiConfiguration,null);
+            enableNetWork = wiFiController.enableNetWork(wifiId);
+            //if (!enableNetWork){
+                boolean reconnect = wiFiController.reconnect();
+                Logger.i("reconnect:"+ reconnect);
+            //}
+        }
+        if (wiFiController.getWifiType(scanResult)== WiFiSecurityType.SECURITY_NONE){
+
+        }
+        wiFiController.connectNetWork(wifiConfiguration);
+        Logger.i("scanResult->"+scanResult+", inputPwd->"+inputPwd+",wifiId:"+",enableNetWork:"+enableNetWork);
+
+
+        //wiFiController.enableNetWork(wifiConfiguration);
+        //此处需要进行连接wifi的操作
+        //wiFiController.connectNetWork(wifiConfiguration,null);
     }
 
     @Override

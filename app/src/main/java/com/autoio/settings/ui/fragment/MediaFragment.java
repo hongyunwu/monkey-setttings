@@ -26,6 +26,7 @@ public class MediaFragment extends BaseFragment<MediaViewHolder> {
     @Override
     public void initData() {
 
+
     }
 
     private static MediaFragment mediaFragment;

@@ -1,6 +1,8 @@
 package com.autoio.settings.adapter;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import com.autoio.core_sdk.wifi.WiFiController;
 import com.autoio.settings.R;
 import com.autoio.settings.holder.WiFiListItemHolder;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -31,7 +34,7 @@ public class WiFiListAdapter extends RecyclerView.Adapter<WiFiListItemHolder> {
      * @param wiFiController 用于控制wifi的变化
      */
     public WiFiListAdapter(Context context, List<ScanResult> scanResult, WiFiController wiFiController) {
-
+        connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         this.context =context;
         this.scanResults = scanResult;
         this.wifiController = wiFiController;
@@ -50,7 +53,7 @@ public class WiFiListAdapter extends RecyclerView.Adapter<WiFiListItemHolder> {
         holder.wifi_name.setText(scanResult.SSID);
         holder.wifi_connneted.setText(scanResult.SSID);
         WifiInfo wifiInfo = wifiController.getConnectWifi();
-        if (wifiInfo!=null&&wifiInfo.getBSSID()!=null && wifiInfo.getBSSID().equals(scanResult.BSSID)){
+        if (wifiInfo!=null&&wifiInfo.getBSSID()!=null && wifiInfo.getBSSID().equals(scanResult.BSSID)&& isWifiConnected(context)){
             holder.wifi_connneted.append("已连接");
         }else{
             holder.wifi_connneted.append("未连接");
@@ -66,12 +69,43 @@ public class WiFiListAdapter extends RecyclerView.Adapter<WiFiListItemHolder> {
             }
         },R.id.item_wifi_list_item);
         //5个级别,信号强度
+        //level值为0～4
+        int level = WifiManager.calculateSignalLevel(scanResult.level, 4);
+        Logger.i("onBindViewHolder->calculateSignalLevel:"+level+",name:"+scanResult.SSID);
+        switch (level){
+            case 0:
+                holder.wifi_level.setBackgroundResource(R.drawable.ic_wifi_signal_1_dark);
 
-        int level = WifiManager.calculateSignalLevel(scanResult.level, 5);
+                break;
+            case 1:
+                holder.wifi_level.setBackgroundResource(R.drawable.ic_wifi_signal_2_dark);
 
+                break;
+            case 2:
+                holder.wifi_level.setBackgroundResource(R.drawable.ic_wifi_signal_3_dark);
 
+                break;
+            case 3:
+                holder.wifi_level.setBackgroundResource(R.drawable.ic_wifi_signal_4_dark);
+
+                break;
+
+        }
     }
 
+
+    ConnectivityManager connectivityManager;
+    public boolean isWifiConnected(Context context)
+    {
+
+        NetworkInfo wifiNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if(wifiNetworkInfo.isConnected())
+        {
+            return true ;
+        }
+
+        return false ;
+    }
     @Override
     public int getItemCount() {
         if (scanResults !=null){

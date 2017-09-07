@@ -1,6 +1,7 @@
 package com.autoio.settings.holder;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,9 @@ public class WiFiListItemHolder  extends BaseHolder{
     public TextView wifi_connneted;
     @BindView(R.id.item_wifi_list_item)
     public LinearLayout item_wifi_list_item;
+    @BindView(R.id.wifi_level)
+    public ImageView wifi_level;
+
     /**
      * 此处使用butterKnife进行了view绑定操作
      *

@@ -1,6 +1,7 @@
 package com.autoio.settings.ui.activity;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -67,7 +68,22 @@ public class SettingsActivity extends BaseActivity<SettingsViewHolder> implement
 
                 viewHolder.leftTitle.setAdapter(leftAdapter);
                 //默认添加汽车设置
-                addFragment(CarFragment.newInstance());
+                if (onIsMultiPane()){
+                    addFragment(CarFragment.newInstance());
+                }else{
+                    viewHolder.rightContent.setVisibility(View.GONE);
+                    getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+                        @Override
+                        public void onBackStackChanged() {
+
+                            if (getSupportFragmentManager().getBackStackEntryCount()==0){
+                                viewHolder.rightContent.setVisibility(View.GONE);
+                                viewHolder.leftTitle.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
+                }
+
             }
         });
 
@@ -103,21 +119,66 @@ public class SettingsActivity extends BaseActivity<SettingsViewHolder> implement
 
     }
 
+    /**
+     * Called to determine if the activity should run in multi-pane mode.
+     * The default implementation returns true if the screen is large
+     * enough.
+     */
+    public boolean onIsMultiPane() {
+        boolean preferMultiPane = getResources().getBoolean(
+                R.bool.preferences_prefer_dual_pane);
+        return preferMultiPane;
+    }
+
     private BaseFragment contentFragment;
     /**
      * 添加设置fragment
      * @param fragment
      */
     public void addFragment(@NonNull BaseFragment fragment){
+        if (onIsMultiPane()){
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        if (contentFragment==null){
-            transaction.add(R.id.right_content,fragment).commit();
+            if (contentFragment==null){
+                transaction.add(R.id.right_content,fragment).commit();
+            }else{
+                transaction.replace(R.id.right_content,fragment).commit();
+            }
+            contentFragment = fragment;
         }else{
-            transaction.replace(R.id.right_content,fragment).commit();
+
+            viewHolder.rightContent.setVisibility(View.VISIBLE);
+            viewHolder.leftTitle.setVisibility(View.GONE);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            if (contentFragment==null){
+                transaction.add(R.id.right_content,fragment).addToBackStack(null).commit();
+            }else{
+                transaction.replace(R.id.right_content,fragment).addToBackStack(null).commit();
+            }
+            contentFragment = fragment;
         }
-        contentFragment = fragment;
+
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (onIsMultiPane()){
+            super.onBackPressed();
+        }else {
+            if (getSupportFragmentManager().getBackStackEntryCount()>0){
+
+                getSupportFragmentManager().popBackStackImmediate();
+                int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+
+            }else {
+                super.onBackPressed();
+            }
+
+        }
 
     }
 }

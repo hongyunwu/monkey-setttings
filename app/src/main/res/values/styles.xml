@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
     <style name="Dialog" parent="android:style/Theme.Dialog">
         <!-- 第一个是dialog的背景色，当然你可以设置图片，不拦大家 -->

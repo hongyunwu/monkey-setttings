@@ -17,6 +17,7 @@
         <ImageView
             android:layout_width="@dimen/recycler_item_margin_left"
             android:layout_height="match_parent"
+            android:background="@drawable/ic_wifi_signal_4_dark"
             android:id="@+id/wifi_level"/>
         <TextView
             android:layout_width="@dimen/width_0"
